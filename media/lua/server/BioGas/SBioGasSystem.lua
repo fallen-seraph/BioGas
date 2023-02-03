@@ -167,7 +167,7 @@ function SBioGasSystem:addBioWaste()
         local hbg = self.system:getObjectByIndex(i-1):getModData()
         local isohbg = hbg:getIsoObject()
         
-        if not SBioGasSystem.playerInVicinity(hbg) then
+        --if not SBioGasSystem.playerInVicinity(hbg) then
             if isohbg then
                 if not (hbg.biowaste == maxWaste) then
                     local biowastecontainer = isohbg:getContainer()
@@ -191,7 +191,7 @@ function SBioGasSystem:addBioWaste()
                     end
                 end
             end
-        end
+        --end
     end
 end
 
