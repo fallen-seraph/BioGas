@@ -13,11 +13,6 @@ local function patch(class,method,patchFn)
     class[method] = patchFn(class[method])
 end
 
-BioGasUtilities.patchClassMetaMethod(zombie.inventory.types.DrainableComboItem.class,"DoTooltip",BioGasMenu.DoTooltip_patch)
-
-require "ISUI/ISInventoryPane"
-patch(ISInventoryPane,"drawItemDetails",BioGasMenu.ISInventoryPane_drawItemDetails_patch)
-
 require "TimedActions/ISInventoryTransferAction"
 wrap(ISInventoryTransferAction,"transferItem",nil,CBioGasSystem.postInventoryTransferAction)
 
