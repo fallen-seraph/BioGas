@@ -1,0 +1,6 @@
+name=BioGas
+id=BaconGas
+description=Mods and Adjustments used by A Path Above server.
+poster=poster.png
+pack=biogas_tileset_01
+tiledef=biogastiledefs 486
