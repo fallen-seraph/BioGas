@@ -35,6 +35,8 @@ function HBGPlungeBiowaste:perform()
         self.character:Say(getText("IGUI_BioGas_ContainerEmpty"))
     end
 
+    self.homebiogas:getContainer():requestSync()
+
     ISInventoryPage.renderDirty = true
 
     ISBaseTimedAction.perform(self);

@@ -8,10 +8,9 @@ end
 
 function HBGDrainFertilizer:start()
     self:setActionAnim("fill_container_tap")
+    self.sound = self.character:playSound("GetWaterFromTap");
 
     local bucket = self.bucket
-
-    self.sound = self.character:playSound(bucket:getFillFromDispenserSound() or "GetWaterFromTap");
 
     if bucket:getType() == "BucketEmpty" then
         local inv = self.character:getInventory()

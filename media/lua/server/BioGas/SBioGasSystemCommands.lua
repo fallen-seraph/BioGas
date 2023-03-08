@@ -32,7 +32,9 @@ function Commands.plungeBiowaste(player,args)
                     if hbg.biowaste < maxWaste then
                         hbg.biowaste = hbg.biowaste + item:getCalories()
                         if item:getReplaceOnUse() then biowastecontainer:AddItem(item:getReplaceOnUse()) end
-                        biowastecontainer:Remove(item)
+                        --biowastecontainer:Remove(item)
+                        biowastecontainer:removeItemOnServer(item)
+                        biowastecontainer:DoRemoveItem(item)
                     end
                 end
 

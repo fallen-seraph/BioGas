@@ -119,43 +119,42 @@ function SBioGasSystem:processBiowaste()
 
         local updatedValues = {}
 
-        if hbg.biowaste < BioWasteHourlyConsumption or tempModifier == 0  then
-            print("No Biowaste")
-            return
+        if tempModifier == 0 or hbg.biowaste < BioWasteHourlyConsumption then
+            --print("Object: "..i.." No Biowaste.")
         else
             updatedValues["biowaste"] = hbg.biowaste - BioWasteHourlyConsumption
-            print("Biowaste Consumption: ",BioWasteHourlyConsumption)
-        end
-
-        if hbg.methane < MaxMethane or hbg.fertilizer < MaxFertilizer then
-            updatedValues["BioGas"] = hbg.methane + (MethaneHourlyRate * tempModifier)
-
-            if updatedValues["BioGas"] >= MaxMethane then
-                updatedValues["BioGas"] = MaxMethane
-            end
-
-            updatedValues["Fertilizer"] = hbg.fertilizer + (FertilizerHourlyRate * tempModifier)
-
-            if updatedValues["Fertilizer"] >= MaxFertilizer then
-                updatedValues["Fertilizer"] = MaxFertilizer
-            end
-        end
-
-        if updatedValues["BioGas"] ~= nil then
-            hbg.methane = round(updatedValues["BioGas"],2)
-        end
+            --print("Biowaste Consumption: ",BioWasteHourlyConsumption)
         
-        if updatedValues["biowaste"] ~= nil then
-            hbg.biowaste = round(updatedValues["biowaste"],2)
+            if hbg.methane < MaxMethane or hbg.fertilizer < MaxFertilizer then
+                updatedValues["BioGas"] = hbg.methane + (MethaneHourlyRate * tempModifier)
+
+                if updatedValues["BioGas"] >= MaxMethane then
+                    updatedValues["BioGas"] = MaxMethane
+                end
+
+                updatedValues["Fertilizer"] = hbg.fertilizer + (FertilizerHourlyRate * tempModifier)
+
+                if updatedValues["Fertilizer"] >= MaxFertilizer then
+                    updatedValues["Fertilizer"] = MaxFertilizer
+                end
+            end
+
+            if updatedValues["BioGas"] ~= nil then
+                hbg.methane = round(updatedValues["BioGas"],2)
+            end
+            
+            if updatedValues["biowaste"] ~= nil then
+                hbg.biowaste = round(updatedValues["biowaste"],2)
+            end
+
+            if updatedValues["Fertilizer"] ~= nil then
+                hbg.fertilizer = round(updatedValues["Fertilizer"],2)
+            end
+
+            hbg:saveData(true)
+
+            --print(string.format("Object: "..i.." BioWaste: %d Current Modifier: %.2f Updated BioGas: %.2f Updated Fertilizer: %.2f",updatedValues["biowaste"],tempModifier,updatedValues["BioGas"],updatedValues["Fertilizer"]))
         end
-
-        if updatedValues["Fertilizer"] ~= nil then
-            hbg.fertilizer = round(updatedValues["Fertilizer"],2)
-        end
-
-        hbg:saveData(true)
-
-        print(string.format("BioWaste: %d Current Modifier: %.2f Updated BioGas: %.2f Updated Fertilizer: %.2f",updatedValues["biowaste"],tempModifier,updatedValues["BioGas"],updatedValues["Fertilizer"]))
     end                     
 end
 

@@ -31,6 +31,19 @@ module Biofuel
         Category:Cooking,
         OnCreate:Recipe.OnCreate.WaterBottle,
     }
+    recipe Double Bacteria Starter
+    {
+        BacteriaStarter,
+        Flour=1,
+        destroy WaterBottleFull,
+        EmptyJar,
+
+        Result:BacteriaStarter=2,
+        SkillRequired:Cooking=2,
+        Time:90,
+        Category:Cooking,
+        OnCreate:Recipe.OnCreate.WaterBottle,
+    }
     recipe Make NPK Fertilizer
     {
         Dirtbag=1,

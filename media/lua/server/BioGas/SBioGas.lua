@@ -33,7 +33,7 @@ function SBioGas:stateToIsoObject(isoObject)
 
     self:toModData(isoObject:getModData())
     isoObject:transmitModData()
-    print("Methane to: ",self.methane)
+    --print("Methane to: ",self.methane)
 
 end
 

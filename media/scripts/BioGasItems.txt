@@ -24,7 +24,7 @@ module Biofuel
 	item IBCWater
 	{
 		DisplayCategory 	= Water,
-		Weight				= 100.0,
+		Weight				= 45.0,
 		Type				= Drainable,
 		UseWhileEquipped	= FALSE,
 		UseDelta			= 0.0025,
@@ -40,7 +40,7 @@ module Biofuel
 	item IBCGas
 	{
 		DisplayCategory 	= VehicleMaintenance,
-		Weight				= 100.0,
+		Weight				= 45.0,
 		Type				= Drainable,
 		UseWhileEquipped	= FALSE,
 		UseDelta			= 0.0025,
@@ -87,5 +87,16 @@ module Biofuel
 		Icon				= MetalBucket_Plaster,
 		StaticModel 		= Bucket,
 		WorldStaticModel 	= BucketFullPlaster_Ground,
+	}
+	item BioGasManual
+	{
+		DisplayCategory = Literature,
+		Weight = 0.01,
+		Type = Map,
+		DisplayName = BioGas Manual,
+		Icon = Paper,
+		Tooltip = "Read Me!",
+		Map = manual_propane,
+		WorldStaticModel = SheetOfPaper,
 	}
 }
