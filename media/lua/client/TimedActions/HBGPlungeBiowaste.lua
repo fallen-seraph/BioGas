@@ -29,15 +29,53 @@ end
 
 function HBGPlungeBiowaste:perform()
 
+    local maxWaste = SandboxVars.BioGas.MaxBiowaste
+    local currentWaste = BioGasUtilities.findOnSquare(self.homebiogas:getSquare(),"biogas_tileset_01_0"):getModData().biowaste
+
     if self.homebiogas:getContainer():getAllCategory("Food"):size() > 0 then
-        CBioGasSystem.instance:sendCommand(self.character,"plungeBiowaste", { { x = self.homebiogas:getX(), y = self.homebiogas:getY(), z = self.homebiogas:getZ() }})
+        if not (currentWaste == maxWaste) then
+            local biowastecontainer = self.homebiogas:getContainer()
+            local foodList = biowastecontainer:getAllCategory("Food")
+            
+            if foodList:size() > 0 then
+                for v=1,foodList:size() do
+                    local item = foodList:get(v-1)
+                    if currentWaste < maxWaste then
+                        currentWaste = currentWaste + item:getCalories()
+                        if item:getReplaceOnUse() then biowastecontainer:AddItem(item:getReplaceOnUse()) end
+                        
+                        if isClient() then
+                            biowastecontainer:removeItemOnServer(item)
+                        end
+
+                        biowastecontainer:DoRemoveItem(item)
+
+                        --[[if item:getWorldItem() ~= nil then
+                            item:getWorldItem():getSquare():transmitRemoveItemFromSquare(item:getWorldItem());
+                            item:getWorldItem():removeFromWorld()
+                            item:getWorldItem():removeFromSquare()
+                            item:getWorldItem():setSquare(nil)
+                            return
+                        end--]]
+                    end
+                end
+
+                if currentWaste > maxWaste then
+                    currentWaste = maxWaste
+                end
+
+                CBioGasSystem.instance:sendCommand(self.character,"plungeBiowaste", { { x = self.homebiogas:getX(), y = self.homebiogas:getY(), z = self.homebiogas:getZ() }, currentWaste})
+
+                --biowastecontainer:requestSync()
+
+                biowastecontainer:setDrawDirty(true)
+
+                --ISInventoryPage.renderDirty = true
+            end
+        end
     else
         self.character:Say(getText("IGUI_BioGas_ContainerEmpty"))
     end
-
-    self.homebiogas:getContainer():requestSync()
-
-    ISInventoryPage.renderDirty = true
 
     ISBaseTimedAction.perform(self);
 end
